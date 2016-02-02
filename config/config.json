@@ -1,0 +1,5 @@
+{
+    "mongoURI": "mongodb://anoopthakur:cdn123456@ds051605.mongolab.com:51605/dbdifferent",  
+    "secret": "sk_test_lZUT4X8QOz4OgKG3xZLdiUNh",
+    "stripeApiKey": "pk_test_AZuj4ac4JkRKUJ3J86oBSW5s"
+}

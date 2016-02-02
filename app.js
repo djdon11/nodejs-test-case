@@ -15,6 +15,8 @@ var users = require( './routes/users' );
 
 var app = express();
 
+app.listen(9003);
+
 // view engine setup
 app.set( 'views', path.join( __dirname, 'views' ) );
 app.set( 'view engine', 'ejs' );
@@ -22,22 +24,20 @@ app.set( 'view engine', 'ejs' );
 app.set( 'layout', 'layout' );
 
 //secret jwt
-app.set( 'superSecret', config.secret ); // secret variable
+var ss = app.set( 'superSecret', config.secret ); // secret variable
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use( logger( 'dev' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( {
-    extended: false
+	extended: false
 } ) );
 app.use( cookieParser() );
 app.use( express.static( path.join( __dirname, 'public' ) ) );
 app.use( expressLayouts );
 
 var mongoDB = require( './config/mongoDB.js' );
-
-
 
 app.use( '/', routes );
 app.use( '/users', users );

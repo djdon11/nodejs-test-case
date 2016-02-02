@@ -1,6 +1,8 @@
 'use strict';
 
 var Transactions = require( '../models/transactions.model.js' );
+//include card model for saving card
+var Cards = require( '../models/card.model.js' );
 var config = require( '../config' );
 var Stripe = require( 'stripe' )( config.stripeApiKey );
 
@@ -19,7 +21,6 @@ exports.index = function( req, res, next ) {
 };
 
 exports.createTransaction = function( req, res, next ) {
-
     Stripe.charges.create( {
         amount: req.body.amount,
         currency: req.body.currency,
@@ -43,6 +44,7 @@ exports.createTransaction = function( req, res, next ) {
                     return res.status( 500 );
                 }
                 else {
+					console.log('Payment is created.');
                     res.status( 200 ).json( {
                         message: 'Payment is created.'
                     } );
@@ -50,4 +52,27 @@ exports.createTransaction = function( req, res, next ) {
             } );
             // asynchronously called
     } );
+};
+
+//for saving card details
+exports.saveCardDetails = function( req, res, next ) {
+	var cards = new Cards( {
+		user_name: req.body.name,
+		card_number: req.body.number,
+		exp_month: req.body.exp_month,
+		exp_year: req.body.exp_year
+	} );
+	cards.save( function( err ) {
+		if ( err ) {
+			return res.status( 500 ).json( {
+				success: false,
+				message: 'Error in saving Card'
+			} );
+		}else{
+			return res.status( 'success' ).json( {
+				success: true,
+				message: 'Card saved'
+			} );
+		}
+	} );
 };

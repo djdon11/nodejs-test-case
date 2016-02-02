@@ -43,6 +43,7 @@ exports.index = function( req, res ) {
                 // return the information including token as JSON
                 res.render( 'transactions', {
                     token: token,
+                    name: req.body.name,
                     title: 'Transactions Page'
                 } );
 
@@ -91,6 +92,7 @@ exports.register = function( req, res ) {
                 // return the information including token as JSON
                 res.render( 'transactions', {
                     token: token,
+                    name: req.body.name,
                     title: 'Transactions Page'
                 } );
             } );
